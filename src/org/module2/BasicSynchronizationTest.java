@@ -1,5 +1,14 @@
 package org.module2;
 
+/*
+ * Synchronization : Threads communicate by sharing access to fields & objects.This form of communication is extremely efficient
+ * 					however it makes two kind of errors : thread interference & memory consistency errors..The tool to prevent 
+ * 					this is called synchronization.
+ * 					However synchronization gives rise to other problems like : thread contention where multiple thread try to 
+ * 					access the same resource and cause the java runtime to execute one or more threads slowly giving rise to 
+ * 					Thread deadlock , starvation & livelock.
+ * 
+ */
 public class BasicSynchronizationTest {
 
 	private int count = 0;
