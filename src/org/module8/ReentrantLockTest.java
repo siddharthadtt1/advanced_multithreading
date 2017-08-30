@@ -42,7 +42,8 @@ public class ReentrantLockTest {
 
 class ReentrantLockProcessor {
 
-	private Lock lock = new ReentrantLock();
+	private Lock lock_1 = new ReentrantLock();
+
 	private int count = 0;
 
 	private void increment() {
@@ -52,15 +53,21 @@ class ReentrantLockProcessor {
 	}
 
 	public void firstMethod() {
-		lock.lock();
-		increment();
-		lock.unlock();
+		try {
+			lock_1.lock();
+			increment();
+		} finally {
+			lock_1.unlock();
+		}
 	}
 
 	public void secondMethod() {
-		lock.lock();
-		increment();
-		lock.unlock();
+		try {
+			lock_1.lock();
+			increment();
+		} finally {
+			lock_1.unlock();
+		}
 	}
 
 	public void finished() {
