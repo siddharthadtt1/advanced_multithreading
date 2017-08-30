@@ -1,5 +1,7 @@
 package org.module8;
 
+import java.util.Scanner;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -43,6 +45,7 @@ public class ReentrantLockTest {
 class ReentrantLockProcessor {
 
 	private Lock lock_1 = new ReentrantLock();
+	private Condition condition = lock_1.newCondition();
 
 	private int count = 0;
 
@@ -55,7 +58,14 @@ class ReentrantLockProcessor {
 	public void firstMethod() {
 		try {
 			lock_1.lock();
+			System.out.println("Thread : " + Thread.currentThread().getName()
+					+ " is in waiting state");
+			condition.await();
+			System.out.println("Thread : " + Thread.currentThread().getName()
+					+ " has woken up");
 			increment();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		} finally {
 			lock_1.unlock();
 		}
@@ -65,6 +75,9 @@ class ReentrantLockProcessor {
 		try {
 			lock_1.lock();
 			increment();
+			System.out.println("Press return key .");
+			new Scanner(System.in).nextLine();
+			condition.signal();
 		} finally {
 			lock_1.unlock();
 		}
